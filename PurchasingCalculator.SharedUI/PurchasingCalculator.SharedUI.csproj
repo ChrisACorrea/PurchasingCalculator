@@ -15,4 +15,8 @@
     <PackageReference Include="MudBlazor" Version="6.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PurchasingCalculator.Shared\PurchasingCalculator.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

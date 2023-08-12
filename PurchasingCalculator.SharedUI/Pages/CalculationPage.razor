@@ -1,0 +1,35 @@
+﻿@page "/calculation"
+@layout MainLayout
+
+<MudStack Spacing="1">
+
+    <MudPaper Elevation="0" Class="mt-2">
+        <MudText Typo="Typo.subtitle1" Align="Align.Center">Total:</MudText>
+        <MudText Typo="Typo.h4" Align="Align.Center"><strong>@($"{Purchase.Total:c2}")</strong></MudText>
+    </MudPaper>
+
+    <MudDivider DividerType="DividerType.Middle" Class="mb-4 mt-3"></MudDivider>
+
+    <MudGrid Spacing="1">
+        <MudItem xs="12">
+            <MudTextField @bind-Value="EditingItem.Description"
+            Label="Descrição" Variant="Variant.Text" />
+        </MudItem>
+        <MudItem xs="8">
+            <MudNumericField T="decimal" @bind-Value="EditingItem.Price" HideSpinButtons
+                Adornment="Adornment.Start" AdornmentText="R$" Format="N2"
+                Label="Preço:" Variant="Variant.Text" Min="decimal.Zero" />
+        </MudItem>
+        <MudItem xs="4">
+            <MudNumericField T="decimal" @bind-Value="EditingItem.Quantity" HideSpinButtons Immediate
+                Adornment="Adornment.End" AdornmentText="@(HasDecimalPoint(EditingItem.Quantity) ? "Kg" : "Un")"
+                Label="Quantidade:" Variant="Variant.Text" Min="decimal.Zero" />
+        </MudItem>
+    </MudGrid>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true"
+               OnClick="() => AddItem()">
+        Adicionar
+    </MudButton>
+
+</MudStack>

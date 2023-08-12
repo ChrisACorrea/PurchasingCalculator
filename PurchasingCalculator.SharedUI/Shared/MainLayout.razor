@@ -5,17 +5,36 @@
 <MudSnackbarProvider />
 
 <MudLayout>
+    
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
             OnClick="@((e) => DrawerToggle())" />
-        My Application
     </MudAppBar>
+    
     <MudDrawer @bind-Open="@_drawerOpen">
+
+        <MudPaper Elevation="0" Class="mt-4">
+            <MudText Typo="Typo.h4" Align="Align.Center"><strong>Calculadora</strong></MudText>
+            <MudText Typo="Typo.h4" Align="Align.Center"><strong>de Compras</strong></MudText>
+        </MudPaper>
+
+        <MudDivider DividerType="DividerType.Middle" Class="my-3"></MudDivider>
+        
         <NavMenu />
+        
+        <MudSpacer></MudSpacer>
+        <MudDivider DividerType="DividerType.Middle" Class="my-2"></MudDivider>
+        
+        <MudText Typo="Typo.caption" Align="Align.Center" Class="mb-2">Versão 0.2.0-alpha</MudText>
+    
     </MudDrawer>
+    
     <MudMainContent>
-        @Body
+        <MudContainer MaxWidth="MaxWidth.Small" Class="pt-3">
+            @Body
+        </MudContainer>
     </MudMainContent>
+
 </MudLayout>
 
 @code {
