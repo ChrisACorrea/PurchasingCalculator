@@ -3,33 +3,60 @@
 
 <MudStack Spacing="1">
 
-    <MudPaper Elevation="0" Class="mt-2">
+    <MudPaper Elevation="0" Class="mt-1">
         <MudText Typo="Typo.subtitle1" Align="Align.Center">Total:</MudText>
         <MudText Typo="Typo.h4" Align="Align.Center"><strong>@($"{Purchase.Total:c2}")</strong></MudText>
     </MudPaper>
 
-    <MudDivider DividerType="DividerType.Middle" Class="mb-4 mt-3"></MudDivider>
+    <MudDivider DividerType="DividerType.Middle" Class="mb-2 mt-2"></MudDivider>
 
-    <MudGrid Spacing="1">
-        <MudItem xs="12">
-            <MudTextField @bind-Value="EditingItem.Description"
-            Label="Descrição" Variant="Variant.Text" />
-        </MudItem>
-        <MudItem xs="8">
-            <MudNumericField T="decimal" @bind-Value="EditingItem.Price" HideSpinButtons
-                Adornment="Adornment.Start" AdornmentText="R$" Format="N2"
-                Label="Preço:" Variant="Variant.Text" Min="decimal.Zero" />
-        </MudItem>
-        <MudItem xs="4">
-            <MudNumericField T="decimal" @bind-Value="EditingItem.Quantity" HideSpinButtons Immediate
-                Adornment="Adornment.End" AdornmentText="@(HasDecimalPoint(EditingItem.Quantity) ? "Kg" : "Un")"
-                Label="Quantidade:" Variant="Variant.Text" Min="decimal.Zero" />
-        </MudItem>
-    </MudGrid>
+    <EditForm Model="EditingItem" OnSubmit="OnSubmit">
 
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" FullWidth="true"
-               OnClick="() => AddItem()">
-        Adicionar
-    </MudButton>
+        <MudGrid Spacing="1">
+
+            <MudItem xs="8">
+                 <MudNumericField @ref="priceField" T="decimal" @bind-Value="EditingItem.Price" HideSpinButtons AutoFocus
+                                 Adornment="Adornment.Start" AdornmentText="R$" Format="N2"
+                                 Margin="Margin.Dense"
+                                 Label="Preço:" Variant="Variant.Text" Min="decimal.Zero"
+                                 @onfocus="() => priceField.SelectAsync()" />
+            </MudItem>
+            <MudItem xs="4">
+                <MudNumericField @ref="quantityField" T="decimal" @bind-Value="EditingItem.Quantity" HideSpinButtons Immediate
+                                 Adornment="Adornment.End" AdornmentText="@(HasDecimalPoint(EditingItem.Quantity) ? "Kg" : "Un")"
+                                 Margin="Margin.Dense"
+                                 Label="Quantidade:" Variant="Variant.Text" Min="decimal.Zero"
+                                 @onfocus="() => quantityField.SelectAsync()" />
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField @ref="descriptionField" T="string" @bind-Value="EditingItem.Description"
+                              Margin="Margin.Dense"
+                              Label="Descrição:" Placeholder="(Opcional)" Variant="Variant.Text"
+                              @onfocus="() => descriptionField.SelectAsync()" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Align="Align.Center">Subtotal: @($"{EditingItem.TotalPrice:c2}")</MudText>
+            </MudItem>
+
+            <MudItem xs="6">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Outlined" Color="Color.Primary" FullWidth="true"
+                    OnClick="() => ClearEditingItem()">
+                    Limpar
+                </MudButton>
+            </MudItem>
+        
+            <MudItem xs="6">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+                    Adicionar
+                </MudButton>
+            </MudItem>
+
+        </MudGrid>
+
+    </EditForm>
+
+
+    <MudDivider DividerType="DividerType.Middle" Class="mb-3 mt-3"></MudDivider>
 
 </MudStack>
