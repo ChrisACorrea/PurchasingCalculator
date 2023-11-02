@@ -1,7 +1,7 @@
 ﻿@page "/calculation"
 @layout MainLayout
 
-<MudStack Spacing="1">
+<MudStack Spacing="1" Class="height-full">
 
     <MudPaper Elevation="0" Class="mt-1">
         <MudText Typo="Typo.subtitle1" Align="Align.Center">Total:</MudText>
@@ -56,7 +56,26 @@
 
     </EditForm>
 
-
     <MudDivider DividerType="DividerType.Middle" Class="mb-3 mt-3"></MudDivider>
+
+    <MudElement HtmlTag="div" Class="height-full overflow-y-auto" Style="height: 100%">
+        @foreach(var item in Purchase.Items.OrderByDescending(x => x.CreationDate))
+        {
+            <MudPaper MinHeight="55px" Class="mb-2 pa-1 flex align-end">
+                <MudGrid Spacing="0">
+                    <MudItem xs="7">
+                        <MudText Typo="Typo.body1" Inline>@($"{item.Price:C2}")</MudText>
+                        <MudText Typo="Typo.caption">@($" x {item.Quantity:N}")</MudText>
+                    </MudItem>
+                    <MudItem xs="5">
+                        <MudText Typo="Typo.body1" Align="Align.End">@($"= {item.TotalPrice:C2}")</MudText>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Typo="Typo.body2" Inline>@(item.Description)</MudText>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        }
+    </MudElement>
 
 </MudStack>
