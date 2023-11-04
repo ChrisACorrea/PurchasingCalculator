@@ -1,12 +1,15 @@
 html {
+    position: relative;
     height: 100vh;
 }
 
 body, #app {
+    position: relative;
     height: 100%;
 }
 
 .height-full {
+    position: relative;
     height: 100%;
 }
 
@@ -39,33 +42,51 @@ body, #app {
         content: "Um erro ocorreu."
     }
 
-.loading-progress {
+#loading-container {
     position: relative;
+    height: 100%;
+    background-color: #5A47FF;
+}
+
+#loading-logo {
+    position: absolute;
     display: block;
-    width: 8rem;
-    height: 8rem;
-    margin: 20vh auto 1rem auto;
+    width: 10rem;
+    height: 10rem;
+    top: calc(30vh + ((15rem - 10rem) / 2));
+    left: calc(50% - (10rem / 2));
+}
+
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 15rem;
+    height: 15rem;
+    top: 30vh;
+    left: calc(50% - (15rem / 2));
 }
 
     .loading-progress circle {
         fill: none;
-        stroke: #e0e0e0;
-        stroke-width: 0.6rem;
+        stroke: #a6a6a6;
+        stroke-width: 1.0rem;
         transform-origin: 50% 50%;
         transform: rotate(-90deg);
     }
 
         .loading-progress circle:last-child {
-            stroke: #1b6ec2;
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            stroke: #ffffff;
+            stroke-dasharray: calc(3.1415 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
             transition: stroke-dasharray 0.05s ease-in-out;
         }
 
 .loading-progress-text {
     position: absolute;
     text-align: center;
-    font-weight: bold;
-    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    inset: calc(30vh + 15rem + 0.5rem) 0 auto 0.2rem;
+    color: #ffffff;
 }
 
     .loading-progress-text:after {
