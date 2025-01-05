@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+
+    <link rel="stylesheet" href="@Assets["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"]" />
+    <link rel="stylesheet" href="@Assets["_content/MudBlazor/MudBlazor.min.css"]" />
+    <link rel="stylesheet" href="@Assets["_content/PurchasingCalculator.Shared/app.css"]" />
+    <link rel="stylesheet" href="@Assets["PurchasingCalculator.Web.styles.css"]" />
+
+    <link rel="icon" type="image/x-icon" href="@Assets["_content/PurchasingCalculator.Shared/favicon.ico"]" />
+    <link rel="apple-touch-icon" sizes="180x180" href="@Assets["_content/PurchasingCalculator.Shared/apple-touch-icon.png"]" />
+    <link rel="icon" type="image/png" sizes="32x32" href="@Assets["_content/PurchasingCalculator.Shared/favicon-32x32.png"]" />
+    <link rel="icon" type="image/png" sizes="16x16" href="@Assets["_content/PurchasingCalculator.Shared/favicon-16x16.png"]" />
+    <link rel="manifest" href="@Assets["/site.webmanifest"]" />
+    
+    <HeadOutlet @rendermode="InteractiveAuto" />
+
+    <!-- SCRIPTS -->
+    <script defer src="_framework/blazor.web.js"></script>
+    <script defer src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+</head>
+
+<body>
+    <Routes @rendermode="InteractiveAuto" />
+</body>
+
+</html>
