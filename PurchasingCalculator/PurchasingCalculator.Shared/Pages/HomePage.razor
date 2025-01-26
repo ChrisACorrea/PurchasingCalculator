@@ -1,0 +1,23 @@
+﻿@page "/"
+@page "/home"
+
+<PageTitle>Início - Calculadora de Compras</PageTitle>
+
+<MudStack>
+    <MudStack Row>
+        <MudText Typo="Typo.h3" Align="Align.Center">Calculadora de Compras</MudText>
+    </MudStack>
+
+    <MudStack Spacing="2" >
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth OnClick="NavigateToCalculationPage">
+            Nova Compra
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth OnClick="NavigateToCalculationPage" Disabled>
+            Continuar Compra
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth OnClick="NavigateToSavedPurchases">
+            Compras Salvas
+        </MudButton>
+
+    </MudStack>
+</MudStack>

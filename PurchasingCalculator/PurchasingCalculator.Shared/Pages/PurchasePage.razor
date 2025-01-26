@@ -1,0 +1,54 @@
+﻿@page "/purchase"
+
+<PageTitle>Calcular compra - Calculadora de Compras</PageTitle>
+
+<EditForm Model="_editingItem">
+<DataAnnotationsValidator />
+<MudFocusTrap>
+
+    <MudGrid Spacing="2" Class="mt-1">
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.h5" Align="Align.Center">Total: @($"{_currentPurchase.Total:c2}")</MudText>
+        </MudItem>
+        
+        <MudItem xs="8">
+            <MudNumericField @bind-Value="_editingItem.UnitPrice" @ref="_unitPriceField" T="decimal" Min="0"
+                             Label="Preço Unitário" Margin="Margin.Dense" HideSpinButtons AutoFocus
+                             Format="N2" Culture="@_currentCulture" Immediate Adornment="Adornment.Start" AdornmentText="@GetAdornmentPriceField()"
+                             @onfocus="() => _unitPriceField.SelectAsync()"/>
+        </MudItem>
+        <MudItem xs="4">
+            <MudNumericField @bind-Value="_editingItem.Quantity" @ref="_quantityField" T="float" Min="0"
+                             Label="Quantidade" Margin="Margin.Dense" HideSpinButtons
+                             Format="@GetAdornmentQuantityFormat()" Culture="@_currentCulture" Immediate Adornment="Adornment.End" AdornmentText="@GetAdornmentQuantityField()"
+                             @onfocus="() => _quantityField.SelectAsync()" />
+        </MudItem>
+        <MudItem xs="12">
+            <MudTextField @bind-Value="_editingItem.Description" Label="Descrição" Placeholder="(Opcional)"
+                            Margin="Margin.Dense" Clearable />
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudStack Row Justify="Justify.Center">
+                <MudText Typo="Typo.caption" Align="Align.Center">Subtotal: @($"{_editingItem.SubTotal:c2}")</MudText>
+            </MudStack>
+        </MudItem>
+
+        <MudItem xs="6">
+            <MudButton Variant="Variant.Filled" Color="Color.Default" Size="Size.Small" FullWidth
+                OnClick="() => ClearPurchase()">
+                Limpar
+            </MudButton>
+        </MudItem>
+        <MudItem xs="6">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" FullWidth
+                OnClick="() => AddItemInPurchase()" ButtonType="ButtonType.Submit">
+                Adicionar
+            </MudButton>
+        </MudItem>
+
+    </MudGrid>
+
+</MudFocusTrap>
+</EditForm>

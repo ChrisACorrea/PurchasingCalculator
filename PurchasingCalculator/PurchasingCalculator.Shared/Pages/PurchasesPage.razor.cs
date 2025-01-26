@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 
 namespace PurchasingCalculator.Shared.Pages;
-public partial class Purchase : ComponentBase
+public partial class PurchasesPage : ComponentBase
 {
 
 }
