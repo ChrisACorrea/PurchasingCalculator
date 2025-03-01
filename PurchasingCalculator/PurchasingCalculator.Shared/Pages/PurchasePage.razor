@@ -2,7 +2,7 @@
 
 <PageTitle>Calcular compra - Calculadora de Compras</PageTitle>
 
-<EditForm Model="_editingItem">
+<EditForm EditContext="editContext" OnValidSubmit="AddItemInPurchase" FormName="PurchaseItemForm">
 <DataAnnotationsValidator />
 <MudFocusTrap>
 
@@ -13,25 +13,25 @@
         </MudItem>
         
         <MudItem xs="8">
-            <MudNumericField @bind-Value="_editingItem.UnitPrice" @ref="_unitPriceField" T="decimal" Min="0"
+            <MudNumericField @bind-Value="EditingItem!.UnitPrice" @ref="_unitPriceField" T="decimal" Min="0"
                              Label="Preço Unitário" Margin="Margin.Dense" HideSpinButtons AutoFocus
                              Format="N2" Culture="@_currentCulture" Immediate Adornment="Adornment.Start" AdornmentText="@GetAdornmentPriceField()"
-                             @onfocus="() => _unitPriceField.SelectAsync()"/>
+                             @onfocus="() => _unitPriceField.SelectAsync()" For="(() => EditingItem!.UnitPrice)"/>
         </MudItem>
         <MudItem xs="4">
-            <MudNumericField @bind-Value="_editingItem.Quantity" @ref="_quantityField" T="float" Min="0"
+            <MudNumericField @bind-Value="EditingItem!.Quantity" @ref="_quantityField" T="float" Min="0"
                              Label="Quantidade" Margin="Margin.Dense" HideSpinButtons
                              Format="@GetAdornmentQuantityFormat()" Culture="@_currentCulture" Immediate Adornment="Adornment.End" AdornmentText="@GetAdornmentQuantityField()"
-                             @onfocus="() => _quantityField.SelectAsync()" />
+                                 @onfocus="() => _quantityField.SelectAsync()" For="(() => EditingItem!.Quantity)" />
         </MudItem>
         <MudItem xs="12">
-            <MudTextField @bind-Value="_editingItem.Description" Label="Descrição" Placeholder="(Opcional)"
-                            Margin="Margin.Dense" Clearable />
+            <MudTextField @bind-Value="EditingItem!.Description" Label="Descrição" Placeholder="(Opcional)"
+                              Margin="Margin.Dense" Clearable For="(() => EditingItem!.Description)" />
         </MudItem>
 
         <MudItem xs="12">
             <MudStack Row Justify="Justify.Center">
-                <MudText Typo="Typo.caption" Align="Align.Center">Subtotal: @($"{_editingItem.SubTotal:c2}")</MudText>
+                <MudText Typo="Typo.caption" Align="Align.Center">Subtotal: @($"{EditingItem!.SubTotal:c2}")</MudText>
             </MudStack>
         </MudItem>
 
@@ -43,7 +43,7 @@
         </MudItem>
         <MudItem xs="6">
             <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" FullWidth
-                OnClick="() => AddItemInPurchase()" ButtonType="ButtonType.Submit">
+                ButtonType="ButtonType.Submit" Disabled="_isInvalidForm">
                 Adicionar
             </MudButton>
         </MudItem>
