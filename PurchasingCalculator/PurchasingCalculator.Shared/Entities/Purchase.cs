@@ -10,6 +10,15 @@ public class Purchase : BaseEntity
         _items.Add(item);
     }
 
+    public void UpdateItem(PurchaseItem item)
+    {
+        var index = _items.FindIndex((x) => x.Id == item.Id);
+        if (index >= 0)
+        {
+            _items[index] = item;
+        }
+    }
+
     public void RemoveItem(PurchaseItem item)
     {
         _items.Remove(item);

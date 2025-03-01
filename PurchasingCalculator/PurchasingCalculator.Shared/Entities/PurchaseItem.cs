@@ -12,4 +12,7 @@ public class PurchaseItem : BaseEntity
     [Range(0.01, double.MaxValue, ErrorMessage = "A quantidade deve ser maior que 0.")]
     public float Quantity { get; set; } = 1.0f;
     public decimal SubTotal => UnitPrice * ((decimal)Quantity);
+
+    public PurchaseItem ShallowCopy()
+        => (PurchaseItem)MemberwiseClone();
 }

@@ -8,8 +8,9 @@ namespace PurchasingCalculator.Shared.Pages;
 public partial class PurchasePage : ComponentBase
 {
     public CultureInfo _currentCulture = CultureInfo.GetCultureInfo("pt-BR");
-    private bool _isInvalidForm = true;
     private EditContext? editContext;
+    private bool _isInvalidForm = true;
+    private bool _isEditing = false;
 
     private MudNumericField<decimal> _unitPriceField = null!;
     private MudNumericField<float> _quantityField = null!;
@@ -26,16 +27,50 @@ public partial class PurchasePage : ComponentBase
         editContext.OnFieldChanged += HandleFieldChanged;
     }
 
+    private void SaveItem()
+    {
+        if (_isEditing)
+        {
+            UpdateItemInPurchase();
+        }
+        else
+        {
+            AddItemInPurchase();
+        }
+    }
+
     private void AddItemInPurchase()
     {
         _currentPurchase.AddItem(EditingItem!);
         ClearPurchase();
     }
 
+    private void UpdateItemInPurchase()
+    {
+        _currentPurchase.UpdateItem(EditingItem!);
+        ClearPurchase();
+    }
+
+    private void EditItemInPurchase(PurchaseItem item)
+    {
+        _isEditing = true;
+        EditingItem = item.ShallowCopy();
+        CreateNewEditContext();
+    }
+
+    private void RemoveItemFromPurchase(PurchaseItem item)
+    {
+        _currentPurchase.RemoveItem(item);
+        StateHasChanged();
+    }
+
     private async void ClearPurchase()
     {
+        CreateNewPurchaseItem();
         CreateNewEditContext();
         StateHasChanged();
+        _isInvalidForm = true;
+        _isEditing = false;
         await _unitPriceField.FocusAsync();
     }
 
@@ -47,7 +82,6 @@ public partial class PurchasePage : ComponentBase
     private void CreateNewEditContext()
     {
         Dispose();
-        CreateNewPurchaseItem();
         editContext = new(EditingItem!);
         editContext.OnFieldChanged += HandleFieldChanged;
     }
@@ -55,14 +89,14 @@ public partial class PurchasePage : ComponentBase
     private string GetAdornmentPriceField()
         => _currentCulture.NumberFormat.CurrencySymbol;
 
-    private bool HasDecimalSeparatorInQuantityField() =>
-        EditingItem!.Quantity.ToString().Contains(_currentCulture.NumberFormat.NumberDecimalSeparator);
+    private bool HasDecimalSeparatorInQuantityField(float value) =>
+        value.ToString().Contains(_currentCulture.NumberFormat.NumberDecimalSeparator);
 
-    private string GetAdornmentQuantityField()
-        => HasDecimalSeparatorInQuantityField() ? "Kg" : "Un";
+    private string GetAdornmentQuantityField(float value)
+        => HasDecimalSeparatorInQuantityField(value) ? "Kg" : "Un";
 
-    private string GetAdornmentQuantityFormat()
-        => HasDecimalSeparatorInQuantityField() ? "N3" : string.Empty;
+    private string GetAdornmentQuantityFormat(float value)
+        => HasDecimalSeparatorInQuantityField(value) ? "N3" : string.Empty;
 
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
