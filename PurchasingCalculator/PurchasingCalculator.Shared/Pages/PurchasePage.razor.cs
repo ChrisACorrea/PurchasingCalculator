@@ -7,6 +7,11 @@ using System.Globalization;
 namespace PurchasingCalculator.Shared.Pages;
 public partial class PurchasePage : ComponentBase
 {
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private ISnackbar SnackbarService { get; set; } = null!;
+
     public CultureInfo _currentCulture = CultureInfo.GetCultureInfo("pt-BR");
     private EditContext? editContext;
     private bool _isInvalidForm = true;
@@ -58,9 +63,24 @@ public partial class PurchasePage : ComponentBase
         CreateNewEditContext();
     }
 
+    private async void ConfirmRemoveItemFromPurchase(PurchaseItem item)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Apagar este item?",
+            "A remoção do item não pode ser desfeita",
+            yesText: "Apagar!", cancelText: "Cancelar");
+        if (result is true)
+        {
+            RemoveItemFromPurchase(item);
+        }
+        StateHasChanged();
+    }
+
     private void RemoveItemFromPurchase(PurchaseItem item)
     {
+        var itemName = string.IsNullOrEmpty(item.Description) ? "O item selecionado" : item.Description;
         _currentPurchase.RemoveItem(item);
+        SnackbarService.Add($"{itemName} foi removido da lista", Severity.Normal);
         StateHasChanged();
     }
 
